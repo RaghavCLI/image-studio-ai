@@ -3,10 +3,6 @@ import { getUploadAuthParams } from '@imagekit/next/server';
 
 export async function GET() {
     try {
-        // Add timestamp to ensure uniqueness
-        const timestamp = Date.now();
-        const randomId = Math.random().toString(36).substring(2, 15);
-
         const {
             token, expire, signature
         } = getUploadAuthParams({
@@ -15,7 +11,7 @@ export async function GET() {
         });
 
         return Response.json({
-            token: `${token}_${timestamp}_${randomId}`, // Make token unique
+            token,
             expire,
             signature,
             publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
